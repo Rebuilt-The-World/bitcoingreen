@@ -2,34 +2,39 @@
 
 The commands in this guide should be executed in a Terminal application.
 The built-in one is located in
-```
+
+```plaintext
 /Applications/Utilities/Terminal.app
-```
+```plaintext
 
 ## Preparation
+
 Install the macOS command line tools:
 
 ```shell
 xcode-select --install
-```
+```plaintext
 
 When the popup appears, click `Install`.
 
 Then install [Homebrew](https://brew.sh).
 
 ## Dependencies
+
 ```shell
 brew install automake berkeley-db4 libtool boost miniupnpc openssl pkg-config protobuf python qt libevent qrencode
-```
+```plaintext
 
 See [dependencies.md](dependencies.md) for a complete overview.
 
 If you want to build the disk image with `make deploy` (.dmg / optional), you need RSVG:
+
 ```shell
 brew install librsvg
-```
+```plaintext
 
 ## Berkeley DB
+
 It is recommended to use Berkeley DB 4.8. If you have to build it yourself,
 you can use [this][db4InstallLink] script to install it
 like so:
@@ -45,35 +50,41 @@ from the root of the repository.
 ## Build Bitcoin Core
 
 1. Clone the Bitcoin Core source code:
+
     ```shell
     git clone https://github.com/bitcoin/bitcoin
     cd bitcoin
     ```
 
-2.  Build Bitcoin Core:
+2. Build Bitcoin Core:
 
     Configure and build the headless Bitcoin Core binaries as well as the GUI (if Qt is found).
 
     You can disable the GUI build by passing `--without-gui` to configure.
+
     ```shell
     ./autogen.sh
     ./configure
     make
     ```
 
-3.  It is recommended to build and run the unit tests:
+3. It is recommended to build and run the unit tests:
+
     ```shell
     make check
     ```
 
-4.  You can also create a  `.dmg` that contains the `.app` bundle (optional):
+4. You can also create a  `.dmg` that contains the `.app` bundle (optional):
+
     ```shell
     make deploy
     ```
 
 ## `disable-wallet` mode
+
 When the intention is to run only a P2P node without a wallet, Bitcoin Core may be
 compiled in `disable-wallet` mode with:
+
 ```shell
 ./configure --disable-wallet
 ```
@@ -83,9 +94,11 @@ In this case there is no dependency on Berkeley DB 4.8.
 Mining is also possible in disable-wallet mode using the `getblocktemplate` RPC call.
 
 ## Running
+
 Bitcoin Core is now available at `./src/bitcoind`
 
 Before running, you may create an empty configuration file:
+
 ```shell
 mkdir -p "/Users/${USER}/Library/Application Support/Bitcoin"
 
@@ -98,11 +111,13 @@ The first time you run bitcoind, it will start downloading the blockchain. This 
 take many hours, or even days on slower than average systems.
 
 You can monitor the download process by looking at the debug.log file:
+
 ```shell
 tail -f $HOME/Library/Application\ Support/Bitcoin/debug.log
 ```
 
-## Other commands:
+## Other commands
+
 ```shell
 ./src/bitcoind -daemon      # Starts the bitcoin daemon.
 ./src/bitcoin-cli --help    # Outputs a list of command-line options.
@@ -110,11 +125,13 @@ tail -f $HOME/Library/Application\ Support/Bitcoin/debug.log
 ```
 
 ## Notes
+
 * Tested on OS X 10.10 Yosemite through macOS 10.14 Mojave on 64-bit Intel
 processors only.
 * Building with downloaded Qt binaries is not officially supported. See the notes in [#7714](https://github.com/bitcoin/bitcoin/issues/7714).
 
 ## Deterministic macOS DMG Notes
+
 Working macOS DMGs are created in Linux by combining a recent `clang`, the Apple
 `binutils` (`ld`, `ar`, etc) and DMG authoring tools.
 
@@ -143,6 +160,7 @@ download, but not redistributable. To obtain it, register for an Apple Developer
 then download the [Xcode 7.3.1 dmg](https://developer.apple.com/devcenter/download.action?path=/Developer_Tools/Xcode_7.3.1/Xcode_7.3.1.dmg).
 
 This file is several gigabytes in size, but only a single directory inside is needed:
+
 ```
 Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk
 ```
@@ -151,6 +169,7 @@ Unfortunately, the usual Linux tools (7zip, hpmount, loopback mount) are incapab
 opening this file. To create a tarball suitable for Gitian input, there are two options:
 
 Using macOS, you can mount the DMG, and then create it with:
+
 ```shell
 hdiutil attach Xcode_7.3.1.dmg
 tar -C /Volumes/Xcode/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/ -czf MacOSX10.11.sdk.tar.gz MacOSX10.11.sdk
@@ -197,15 +216,15 @@ order to satisfy the new Gatekeeper requirements. Because this private key canno
 shared, we'll have to be a bit creative in order for the build process to remain somewhat
 deterministic. Here's how it works:
 
-- Builders use Gitian to create an unsigned release. This outputs an unsigned DMG which
+* Builders use Gitian to create an unsigned release. This outputs an unsigned DMG which
   users may choose to bless and run. It also outputs an unsigned app structure in the form
   of a tarball, which also contains all of the tools that have been previously (deterministically)
   built in order to create a final DMG.
-- The Apple keyholder uses this unsigned app to create a detached signature, using the
+
+* The Apple keyholder uses this unsigned app to create a detached signature, using the
   script that is also included there. Detached signatures are available from this [repository](https://github.com/bitcoin-core/bitcoin-detached-sigs).
-- Builders feed the unsigned app + detached signature back into Gitian. It uses the
+
+* Builders feed the unsigned app + detached signature back into Gitian. It uses the
   pre-built tools to recombine the pieces into a deterministic DMG.
-
-
 
 [db4InstallLink]: /contrib/install_db4.sh
