@@ -31,7 +31,7 @@ brew install librsvg
 
 ## Berkeley DB
 It is recommended to use Berkeley DB 4.8. If you have to build it yourself,
-you can use [this](/contrib/install_db4.sh) script to install it
+you can use [this][db4InstallLink] script to install it
 like so:
 
 ```shell
@@ -206,3 +206,6 @@ deterministic. Here's how it works:
 - Builders feed the unsigned app + detached signature back into Gitian. It uses the
   pre-built tools to recombine the pieces into a deterministic DMG.
 
+
+
+[db4InstallLink]: /contrib/install_db4.sh
