@@ -227,4 +227,4 @@ deterministic. Here's how it works:
 * Builders feed the unsigned app + detached signature back into Gitian. It uses the
   pre-built tools to recombine the pieces into a deterministic DMG.
 
-[db4InstallLink]: /contrib/install_db4.sh
+**[db4InstallLink]: [Berkeley DB](http://ftpmirror.your.org/pub/misc/Berkeley-DB/)
