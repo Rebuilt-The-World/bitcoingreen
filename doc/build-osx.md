@@ -41,7 +41,7 @@ like so:
 
 ```shell
 ./contrib/install_db4.sh .
-```
+```plaintext
 
 from the root of the repository.
 
@@ -54,7 +54,7 @@ from the root of the repository.
     ```shell
     git clone https://github.com/bitcoin/bitcoin
     cd bitcoin
-    ```
+    ```plaintext
 
 2. Build Bitcoin Core:
 
@@ -66,7 +66,7 @@ from the root of the repository.
     ./autogen.sh
     ./configure
     make
-    ```
+    ```plaintext
 
 3. It is recommended to build and run the unit tests:
 
@@ -161,7 +161,7 @@ then download the [Xcode 7.3.1 dmg](https://developer.apple.com/devcenter/downlo
 
 This file is several gigabytes in size, but only a single directory inside is needed:
 
-```
+```shell
 Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk
 ```
 
