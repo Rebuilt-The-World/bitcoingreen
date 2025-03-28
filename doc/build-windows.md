@@ -34,14 +34,19 @@ Full instructions to install WSL are available on the above link.
 To install WSL on Windows 10 with Fall Creators Update installed (version >= 16215.0) do the following:
 
 1. Enable the Windows Subsystem for Linux feature
-  * Open the Windows Features dialog (`OptionalFeatures.exe`)
+
+* Open the Windows Features dialog (`OptionalFeatures.exe`)
   * Enable 'Windows Subsystem for Linux'
   * Click 'OK' and restart if necessary
+
 2. Install Ubuntu
-  * Open Microsoft Store and search for "Ubuntu 18.04" or use [this link](https://www.microsoft.com/store/productId/9N9TNGVNDL3Q)
+
+* Open Microsoft Store and search for "Ubuntu 18.04" or use [this link](https://www.microsoft.com/store/productId/9N9TNGVNDL3Q)
   * Click Install
+
 3. Complete Installation
-  * Open a cmd prompt and type "Ubuntu1804"
+
+* Open a cmd prompt and type "Ubuntu1804"
   * Create a new UNIX user account (this is a separate account from your Windows account)
 
 After the bash shell is active, you can follow the instructions below, starting
@@ -76,7 +81,7 @@ Acquire the source in the usual way:
     git clone https://github.com/bitcoin/bitcoin.git
     cd bitcoin
 
-## Building for 64-bit Windows
+### Building for 64-bit Windows
 
 The first step is to install the mingw-w64 cross-compilation tool chain:
 
